@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración de Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-section input[type="text"] {
+            width: calc(100% - 22px); /* Ancho completo menos padding */
+            padding: 12px 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .input-section button {
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .input-section button:hover {
+            background-color: #0056b3;
+        }
+
+        #publicLinkContainer {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        #publicLinkOutput {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            word-wrap: break-word; /* Permite que el texto largo se rompa */
+            font-family: monospace;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        #copyLinkButton {
+            background-color: #28a745; /* Verde para copiar */
+        }
+
+        #copyLinkButton:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Panel de Administración de Video</h1>
+
+        <div class="input-section">
+            <label for="videoUrlInput">URL del Video (MP4, WebM, etc.):</label><br>
+            <input type="text" id="videoUrlInput" placeholder="Pega la URL directa del video aquí">
+            <button id="generateLinkButton">Generar Enlace Público</button>
+        </div>
+
+        <div id="publicLinkContainer" style="display: none;">
+            <p><strong>Enlace Público para Compartir:</strong></p>
+            <div id="publicLinkOutput"></div>
+            <button id="copyLinkButton">Copiar Enlace</button>
+        </div>
+    </div>
+
+    <script>
+        const videoUrlInput = document.getElementById('videoUrlInput');
+        const generateLinkButton = document.getElementById('generateLinkButton');
+        const publicLinkContainer = document.getElementById('publicLinkContainer');
+        const publicLinkOutput = document.getElementById('publicLinkOutput');
+        const copyLinkButton = document.getElementById('copyLinkButton');
+
+        generateLinkButton.addEventListener('click', () => {
+            const videoUrl = videoUrlInput.value.trim();
+
+            if (videoUrl) {
+                // Obtiene la base de la URL actual (donde se aloja admin.html)
+                // y la modifica para apuntar a public.html
+                const currentUrl = window.location.href;
+                let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+
+                // Si estás en localhost y quieres que apunte a un dominio,
+                // deberías cambiar 'baseUrl' manualmente aquí
+                // Por ejemplo: baseUrl = "https://tu-sitio.com/";
+
+                const publicPageUrl = baseUrl + 'public.html'; // Asegúrate de que 'public.html' esté en la misma carpeta
+                const finalLink = `${publicPageUrl}?video=${encodeURIComponent(videoUrl)}`;
+
+                publicLinkOutput.textContent = finalLink;
+                publicLinkContainer.style.display = 'block';
+
+                // Copiar al portapapeles
+                copyLinkButton.onclick = () => {
+                    navigator.clipboard.writeText(finalLink).then(() => {
+                        copyLinkButton.textContent = "¡Copiado!";
+                        setTimeout(() => {
+                            copyLinkButton.textContent = "Copiar Enlace";
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Error al copiar el texto: ', err);
+                    });
+                };
+            } else {
+                alert('Por favor, introduce una URL de video.');
+                publicLinkContainer.style.display = 'none';
+            }
+        });
+
+        // Opcional: Ejemplo de URL al cargar la página
+        videoUrlInput.value = "https://www.w3schools.com/html/mov_bbb.mp4";
+    </script>
+
+</body>
+</html>
