@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Video Básico</title>
+    <style>
+        /* Estilos CSS para mejorar la apariencia del video */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ocupa al menos el 100% de la altura de la ventana */
+            background-color: #ffffff; /* Un fondo gris claro */
+            margin: 0;
+            padding: 20px; /* Pequeño espacio alrededor */
+            box-sizing: border-box; /* Incluye el padding en el ancho/alto */
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        video {
+            max-width: 100%; /* Asegura que el video no exceda el ancho del contenedor */
+            height: auto; /* Mantiene la proporción del video */
+            border: 2px solid #ddd; /* Un borde suave */
+            border-radius: 10px; /* Bordes ligeramente redondeados */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
+            background-color: #000; /* Fondo negro para el reproductor */
+        }
+
+        /* Estilos para pantallas más pequeñas */
+        @media (max-width: 1200px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mi Videy Favorito.</h1>
+
+    <video controls poster="miniatura-video.jpg">
+        <source src="https://cdn.videy.co/MF9Ie1Pl1.mp4" type="video/mp4">
+        Tu navegador no soporta la etiqueta de video. Considera actualizarlo.
+    </video>
+
+</body>
+</html>
